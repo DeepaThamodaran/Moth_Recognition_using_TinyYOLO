@@ -1,8 +1,8 @@
 # Moth_Recognition_using_TinyYOLO
 
-This repository walks-through how to train a TensorFlow TinyYOLO model using image-retraining. It shows how to take our own images organize into folders by category, and use them to quickly retrain the top layer of the convolution neural network to recognize those image categories. 
+This repository walks-through how to train a TensorFlow TinyYOLO model using image-retraining. It shows how to take our own images, organize by category, and use them to quickly retrain last layer of the convolution neural network and validate those object of interest. 
 
-The training process outputs the retrained graph as tiny-yolo-voc-{no.of classes}c.pb, which can be used to validate the model. This deep learning classifier can be used to train any object of our interest.
+The training process outputs the retrained graph as tiny-yolo-voc-{no.of classes}c.pb, which can be used to validate the model in mobile devices. This deep learning classifier can be used to train any object of our interest.
 
 # Operational Procedure in Terminal window
 
@@ -30,13 +30,13 @@ Step-3 Move to code repository:
 
 Step-4 Download weights:
 
-- Weights and config files can be downloaded form https://pjreddie.com/darknet/yolo/. For this exercise, I have used Tiny-YOLO version, which was trained on COCO dataset. 
-- Now that you have downloaded, place your cfg file under cfg/tiny-yolo-voc.cfg folder and weights under bin/tiny-yolo-voc.weights folder
+- Weights and config files can be downloaded form https://pjreddie.com/darknet/yolo/. For this exercise, I used Tiny-YOLO version 
+- Now that you have downloaded, place your cfg file as cfg/tiny-yolo-voc.cfg and weights as bin/tiny-yolo-voc.weights
 
-Step-5 Re-train the network:
+Step-5 Prepare for training:
 
-- Download images of interested objects from Google and label them using rectlabel app. Here, I have used 5-moth species - Cabbage_white, Cecropia_silkmoth, Luna_moth, Bronze_copper and Silvery_Blue; downloaded those species images and labelled them
-- Save the images under /training/images folder and their annotations under /training/annotations folder
+- Download images of interested objects from Google and label them using rectlabel app. Here, I tried 5-moth species - Cabbage_white, Cecropia_silkmoth, Luna_moth, Bronze_copper and Silvery_Blue; downloaded those species images from google and labelled them using rectlabel app
+- Save the images under /training/images folder and annotations under /training/annotations folder
 - Generate label.txt file with class names and place it under main folder
 - Generate new tiny-yolo-voc-{no.of classes}c.cfg file from tiny-yolo-voc.cfg. The naming convention of new cfg file is always tiny-yolo-voc-{no.of classes}c.cfg. 
 - In this new tiny-yolo-voc-{no.of classes}c.cfg file, we have to modify filters and classes of the last convolution layer as below.
@@ -90,8 +90,16 @@ Step-5 Validate the model:
 > ./flow --model cfg/tiny-yolo-voc-xc.cfg --load yyyy --threshold 0.03 --gpu 1.0 --imgdir data/images/
 
   The above execution will detect moth species from images under data/images/ folder and save the results under data/images/out folder
+  
+Step-6 Generate retrained graph:
 
-Step-6 Deactivate virtual environment:
+The retrained graph have the naming cnvention of tiny-yolo-voc-xc.pb, to generate this file, use --savepb argument as shown below
+
+> ./flow --model cfg/tiny-yolo-voc-xc.cfg --load -yyyy --savepb
+
+   The above execution produce tiny-yolo-voc-xc.pb and tiny-yolo-voc-xc.meta files under built_graph folder
+
+Step-7 Deactivate virtual environment:
 
 > source deactivate
 
@@ -120,6 +128,7 @@ Output:
 
 The output file is saved as video.avi under main folder (replacing the above video.avi)
 
+
 # Expected Output for Image validation:
 
 The below screenshot shows the expected output from photos or images.
@@ -130,7 +139,15 @@ Input:
 
 Output:
 
-
+![alt text](https://github.com/DeepaThamodaran/Moth_Recognition_using_TinyYOLO/blob/master/TinyYOLO_Photo_validation.png)
 
 # Mobile App in iOS devices:
 
+Very clear documentation of how to convert a retrained graph using coreml and make it compactible for mobile device are elaborated in these repositories. I just followed their step validated using iOS device. Below is the screenshot of real-time validation using iPhone
+
+- https://github.com/tf-coreml/tf-coreml
+- https://github.com/hollance/YOLO-CoreML-MPSNNGraph
+
+![alt text](https://github.com/DeepaThamodaran/Moth_Recognition_using_TinyYOLO/blob/master/TinyYOLO_RT_validation.png)
+
+# References:
