@@ -49,12 +49,12 @@ Step-5 Validate the network:
 > ./flow --model cfg/tiny-yolo-voc-5c.cfg --load 3000 --threshold 0.03 --gpu 1.0 --imgdir data/images/
 
 # Expected Output for Image validation:
-- The below screenshot shows the expected output of model validation from photos or images.
+The below screenshot shows the expected output of model validation from photos or images.
 
-- Input:
+Input:
 > ./flow --model cfg/tiny-yolo-voc-5c.cfg --load 3000 --threshold 0.03 --gpu 1.0 --imgdir data/images/
 
-- Output:
+Output:
 
 
 
